@@ -3,49 +3,44 @@ import java.io.*;
 
 public class Main {
 
-    static class Node{
-        int value;
+    private static class Node{
         int index;
+        int value;
 
-        Node(int value, int index){
-            this.value = value;
+        public Node(int index, int value){
             this.index = index;
+            this.value = value;
         }
     }
 
-    static BufferedReader br;
-    static BufferedWriter bw;
     static StringTokenizer st;
+    static Deque<Node> dq = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         st = new StringTokenizer(br.readLine());
+
         int N = Integer.parseInt(st.nextToken());
         int L = Integer.parseInt(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
 
-        Deque<Node> dq = new LinkedList<>();
-
         for (int i=0; i<N; i++){
-            int now = Integer.parseInt(st.nextToken());
+            int num = Integer.parseInt(st.nextToken());
 
-            while (!dq.isEmpty() && dq.getLast().value > now){
+            while (!dq.isEmpty() && dq.getLast().value > num){
                 dq.removeLast();
             }
 
-            dq.addLast(new Node(now, i));
+            dq.addLast(new Node(i, num));
 
-            if(dq.getFirst().index <= i-L){
+            if (dq.getFirst().index < i-L+1){
                 dq.removeFirst();
             }
 
-            bw.write(dq.getFirst().value + " ");
+            sb.append(dq.getFirst().value).append(" ");
         }
-
-        bw.flush();
-        bw.close();
+        System.out.println(sb);
     }
 }
