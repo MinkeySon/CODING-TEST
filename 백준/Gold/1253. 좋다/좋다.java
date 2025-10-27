@@ -3,53 +3,50 @@ import java.io.*;
 
 public class Main {
 
-    static BufferedReader br;
     static StringTokenizer st;
-    static int N;
-    static int cnt;
+    static int count;
 
     public static void main(String[] args) throws IOException {
-        br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int [] arr = new int[N];
 
-        N = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine(), " ");
+        st = new StringTokenizer(br.readLine());
 
-        int[] arr = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+        for (int i=0; i<N; i++){
+            int num = Integer.parseInt(st.nextToken());
+            arr[i] = num;
         }
 
         Arrays.sort(arr);
 
-        for (int target = 0; target<N; target ++) {
-            long targetNum = arr[target];
-
+        for (int i=0; i<N; i++){
+            int targetNum = arr[i];
             int start = 0;
-            int step = N - 1;
+            int end = N-1;
 
-            while (start < step) {
-                long sum = arr[start] + arr[step];
+            while (start != end){
+                long sum = arr[start] + arr[end];
 
-                if (sum == targetNum) {
-                    if (start != target && step != target) {
-                        cnt++;
+                if (sum == targetNum){
+                    if (start != i && end != i){
+                        count++;
                         break;
-                    } else if (start == target) {
+                    }else if (start == i){
                         start++;
-
-                    } else {
-                        step --;
+                    }else if (end == i){
+                        end--;
                     }
-                }
-                else if(sum < targetNum){
-                    start ++;
-                }
-                else {
-                    step --;
+                }else {
+                    if (sum < targetNum){
+                        start ++;
+                    }else{
+                        end --;
+                    }
                 }
             }
         }
-        System.out.println(cnt);
+
+        System.out.println(count);
     }
 }
