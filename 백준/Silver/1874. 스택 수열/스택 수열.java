@@ -3,48 +3,44 @@ import java.io.*;
 
 public class Main {
 
-    public static BufferedReader br;
-    public static StringBuilder sb;
+    public static StringBuilder sb = new StringBuilder();
     public static Stack<Integer> stack = new Stack<>();
 
     public static void main(String[] args ) throws IOException {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        sb = new StringBuilder();
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
         int max = 1;
 
         for (int i=0; i<N; i++){
-            int input = Integer.parseInt(br.readLine());
+            int num = Integer.parseInt(br.readLine());
 
-            if (max <= input){
-                while(max <= input){
+            if (max <= num){
+                while(max <= num){
                     stack.push(max);
                     sb.append("+").append("\n");
                     max++;
                 }
-                stack.pop();
                 sb.append("-").append("\n");
-            }
-
-            else{
+                stack.pop();
+            }else{
                 if (stack.isEmpty()){
                     sb = new StringBuilder();
                     sb.append("NO");
                     break;
-                }
-                else if (stack.peek() != input){
+                }else if (stack.peek() != num){
                     break;
                 }
                 stack.pop();
                 sb.append("-").append("\n");
             }
+
         }
-            if (stack.isEmpty()){
-                System.out.println(sb);
-            }else{
-                System.out.println("NO");
-            }
+
+        if(stack.isEmpty()){
+           System.out.println(sb);
+        }else{
+            System.out.println("NO");
         }
+    }
 }
